@@ -4,12 +4,12 @@ This Open Source tool is NOT maintained by the manufacturer ProteGear.
 
 This tool is able to read basic system information like postion, battery status, speed etc. via BLE + send and receive messages via GSM/Iridium satellite system.
 
-Requirements.
+Requirements for the Alive Messenger.
 
 Python 3.7x or higher
-Python Library Bleak --> https://github.com/hbldh/bleak
+Bleak GATT client software --> https://github.com/hbldh/bleak
 
-Please install bleak via Python Pip Tool
+Please install Bleak is a GATT client software via Python Pip Tool
 ```
 pip3 install bleak
 ```
