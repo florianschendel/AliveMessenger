@@ -21,7 +21,7 @@ async def discovery():
     for a in address:
         print("Device entry:",i,"Device Name:",name[i],"Device address:",address[i])
         i += 1
-    
+
     while True:
         try:
             print ("##################################################################################################")
@@ -38,7 +38,7 @@ async def discovery():
         except:
             print("Unexpected error:", sys.exc_info()[0])
             raise
-            
+
     async with BleakClient(ble_address, loop=loop) as client:
         while True:
             try:
@@ -50,7 +50,7 @@ async def discovery():
                 print("Type in 4 to get Location data")
                 print("Type in 9 to terminate the program")
                 action_selection = int(input("Please select the device entry number: "))
-            
+
                 if action_selection == 0:
                     # Check System information
                     battery_status = await client.read_gatt_char(AliveMessengerUUID.BT_LVL_UUID)
@@ -69,7 +69,7 @@ async def discovery():
                     print ("Firmware:",firmware_rev.decode('utf-8'))
                     print ("Serial Number:",serial_number.decode('utf-8'))
                     print ("Battery status:",int.from_bytes(battery_status, byteorder='little'),"%")
-                    
+
                 elif action_selection == 1:
                     # Check Tracking
                     TRK_GSM_STD_ITVL = await client.read_gatt_char(AliveMessengerUUID.TRK_GSM_STD_ITVL_UUID)
@@ -101,7 +101,7 @@ async def discovery():
                         print ("Tracking Mode: " + "SOS")
                     else:
                         print ("Tracking Mode: " + "Unknown")
-                        
+
                 elif action_selection == 2:
                     # Check messages
                     currentSender = await client.read_gatt_char(AliveMessengerUUID.MSG_ADDR_UUID)
@@ -112,7 +112,7 @@ async def discovery():
                     print ("##################################################################################################")
                     print ("Sender: ",str(currentSender, 'utf-8'))
                     print ("Message: ",str(currentMessage, 'utf-8'))
-                    
+
                 elif action_selection == 3:
                     print ("##################################################################################################")
                     print ("######################################## Send messages #######################################")
@@ -149,7 +149,7 @@ async def discovery():
                     loc_ftrs = await client.read_gatt_char(AliveMessengerUUID.LOC_FTRS_UUID)
                     loc_qlty = await client.read_gatt_char(AliveMessengerUUID.LOC_QLTY_UUID)
                     loc_data = await client.read_gatt_char(AliveMessengerUUID.LOC_DATA_UUID)
-                    
+
                     data_string_flags = AliveMessengerHelper.BitMerge(loc_data,AliveMessengerUUID.LOC_DATA_BYTE_FLAGS)
                     feature_flags = AliveMessengerHelper.BitMerge(loc_ftrs,AliveMessengerUUID.LOC_FTRS_BYTES)
                     # Print output only for debugging
